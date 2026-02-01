@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     "DailyTech",
   ],
   verification: {
-    google: "/google77d08cbc9e81f5ef.html",
+    google: "google77d08cbc9e81f5ef",
   },
 
   alternates: {
@@ -65,11 +66,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col justify-center items-center">
-          <Analytics />
-          <Navbar />
-        </div>
+        <GoogleAnalytics gaId="G-3FQ5ZZ6SC5" />
+
+        <Analytics />
+
+        <Navbar />
+
         <main className="min-h-screen">{children}</main>
+
         <Toaster />
         <Footer />
       </body>
