@@ -11,6 +11,20 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://dailtech.in/blog",
   },
+  keywords: [
+    "technology blog",
+    "tech news",
+    "AI tools",
+    "mobile phones",
+    "laptops",
+    "gadgets",
+    "software reviews",
+    "coding tutorials",
+    "developer tools",
+    "tech guides",
+    "DailyTech",
+  ],
+
   openGraph: {
     title: "DailyTech Blog | Latest Tech News, AI & Gadgets",
     description:
@@ -38,7 +52,7 @@ export default async function Blog() {
     fetchBlogs(),
     fetchBlogCategory(),
   ]);
-  const blogs = blogsData.data.filter((blog:BlogType)=>!blog.isFeatured);
+  const blogs = blogsData.data.filter((blog: BlogType) => !blog.isFeatured);
   const category = categoryData.data;
   if (!blogs || blogs.length === 0) {
     return (
