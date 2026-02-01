@@ -1,3 +1,35 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | DailyTech",
+  description:
+    "Read DailyTech’s Privacy Policy to understand how we collect, use, and protect your personal information while you use our technology content and services.",
+  alternates: {
+    canonical: "https://dailtech.in/privacy",
+  },
+
+  openGraph: {
+    title: "Privacy Policy | DailyTech",
+    description:
+      "DailyTech Privacy Policy explains how user data, cookies, and analytics information are collected and protected.",
+    url: "https://dailtech.in/privacy",
+    siteName: "DailyTech",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | DailyTech",
+    description:
+      "Learn how DailyTech handles user data, privacy, cookies, and analytics responsibly.",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
 const PrivacyPolicy = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 2xl:px-0">

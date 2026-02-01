@@ -1,3 +1,35 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | DailyTech",
+  description:
+    "Read DailyTech’s Terms of Service to understand the rules, responsibilities, and conditions for using our technology news and content platform.",
+  alternates: {
+    canonical: "https://dailtech.in/terms",
+  },
+
+  openGraph: {
+    title: "Terms of Service | DailyTech",
+    description:
+      "Official Terms of Service for DailyTech. Learn about content usage, responsibilities, and legal conditions for accessing our website.",
+    url: "https://dailtech.in/terms",
+    siteName: "DailyTech",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary",
+    title: "Terms of Service | DailyTech",
+    description:
+      "DailyTech Terms of Service outlining rules, content usage, and responsibilities for users.",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
 const TermsOfService = () => {
   return (
     <div className="max-w-7xl mx-auto p-6 2xl:px-0">
