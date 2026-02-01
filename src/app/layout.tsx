@@ -48,6 +48,7 @@ export const metadata: Metadata = {
     title: "DailyTech | Technology Made Simple",
     description:
       "DailyTech shares easy-to-understand technology news, gadget reviews, AI tools, and coding guides.",
+    images: ["https://dailtech.in/og-image.png"],
   },
 
   robots: {

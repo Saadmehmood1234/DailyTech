@@ -39,6 +39,7 @@ export const metadata: Metadata = {
     title: "DailyTech Blog | Technology Made Simple",
     description:
       "Read the latest blogs on technology, gadgets, AI, software, and coding on DailyTech.",
+    images: ["https://dailtech.in/og-image.png"],
   },
 
   robots: {

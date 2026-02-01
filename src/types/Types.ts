@@ -31,6 +31,8 @@ export interface BlogType {
   excerpt: string;
   content: string;
   featuredImage: string;
+  seoDescription?:string
+  seoTitle?:string;
   category: Category;
   tags: string[];
   views: number;
