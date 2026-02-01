@@ -1,3 +1,34 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About DailyTech | Tech News, Gadgets, AI & Software Insights",
+  description:
+    "Learn about DailyTech – our mission to provide accurate, easy-to-understand technology content covering mobile phones, laptops, AI tools, software, coding, and the latest tech trends.",
+  alternates: {
+    canonical: "https://dailtech.in/about",
+  },
+  openGraph: {
+    title: "About DailyTech | Technology Made Simple",
+    description:
+      "Discover DailyTech’s vision, motivation, and commitment to delivering trusted tech content on mobiles, laptops, AI, software, and modern technology.",
+    url: "https://dailtech.in/about",
+    siteName: "DailyTech",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "About DailyTech | Technology Made Simple",
+    description:
+      "DailyTech shares reliable tech news, gadget guides, AI tools, and software insights for modern users.",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
 const AboutUs = async () => {
 
   return (
