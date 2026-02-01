@@ -1,4 +1,3 @@
-import { BlogType } from "@/types/Types";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -18,19 +17,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "" ? 1.0 : 0.8,
   }));
 
-
+  // ⚠️ Optional: Dynamic blog URLs
+  // Uncomment when you want to include blogs
+  /*
   const blogsRes = await fetch("https://your-api/blogs", {
     cache: "no-store",
   });
   const blogs = await blogsRes.json();
 
-  const blogUrls = blogs.map((blog: BlogType) => ({
+  const blogUrls = blogs.map((blog: any) => ({
     url: `${baseUrl}/blog/${blog.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date(blog.updatedAt),
     changeFrequency: "weekly",
     priority: 0.7,
   }));
+  */
 
-
-  return [...staticUrls , ...blogUrls ];
+  return [...staticUrls /*, ...blogUrls */];
 }
