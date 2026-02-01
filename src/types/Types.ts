@@ -37,6 +37,7 @@ export interface BlogType {
   tags: string[];
   views: number;
   isFeatured: boolean;
+  updatedAt?:string
   createdAt: string;
   readTime: number;
 }
