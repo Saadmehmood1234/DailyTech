@@ -1,10 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   experimental: {
-    modern: true,
+    // ⚠️ modern is deprecated in newer Next.js
+    // remove if you’re on Next 14+
   },
+
   images: {
-    
     remotePatterns: [
       {
         protocol: "https",
@@ -16,12 +18,9 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "**",
-      },
     ],
   },
+
   reactCompiler: true,
 };
 
