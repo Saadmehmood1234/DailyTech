@@ -92,13 +92,14 @@ const markdownComponents: Components = {
 
     return (
       <figure className="my-6 sm:my-8 w-full">
-        <div className="relative w-full aspect-video overflow-hidden rounded-md sm:rounded-xl bg-muted">
+        <div className="relative w-full max-w-3xl mx-auto bg-muted rounded-md sm:rounded-xl overflow-hidden">
           <Image
-            src={imageSrc || ""}
+            src={imageSrc}
             alt={alt || ""}
-            fill
+            width={1200}
+            height={1200}
             sizes="(max-width: 480px) 100vw, (max-width: 1024px) 90vw, 896px"
-            className="object-cover"
+            className="w-full h-auto object-contain"
             priority
           />
         </div>
