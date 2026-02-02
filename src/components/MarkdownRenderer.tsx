@@ -71,18 +71,47 @@ const markdownComponents: Components = {
   ),
 
   /* ---------- Tables ---------- */
+  /* ---------- Tables (Fully Responsive) ---------- */
   table: ({ children }) => (
-    <div className="my-5 w-full overflow-x-auto rounded-lg border border-border">
-      <table className="min-w-full text-xs sm:text-sm">{children}</table>
+    <div className="relative my-5 -mx-4 sm:mx-0 overflow-x-auto">
+      <div className="inline-block min-w-full align-middle">
+        <table className="min-w-full border border-border rounded-lg overflow-hidden text-[11px] sm:text-sm">
+          {children}
+        </table>
+      </div>
     </div>
   ),
+
   th: ({ children }) => (
-    <th className="bg-muted p-2 font-semibold border-b whitespace-nowrap">
+    <th
+      className="
+      bg-muted
+      px-3
+      py-2
+      text-left
+      font-semibold
+      border-b
+      break-words
+      whitespace-normal
+    "
+    >
       {children}
     </th>
   ),
+
   td: ({ children }) => (
-    <td className="p-2 border-b border-border whitespace-nowrap">{children}</td>
+    <td
+      className="
+      px-3
+      py-2
+      border-b
+      border-border
+      wrap-break-words
+      whitespace-normal
+    "
+    >
+      {children}
+    </td>
   ),
 
   /* ---------- Images ---------- */
