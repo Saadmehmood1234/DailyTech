@@ -92,13 +92,25 @@ const markdownComponents: Components = {
 
     return (
       <figure className="my-6 sm:my-8 w-full">
-        <div className="relative w-full max-w-3xl mx-auto bg-muted rounded-md sm:rounded-xl overflow-hidden">
+        <div
+          className="
+        relative
+        mx-auto
+        w-full
+        sm:w-[80%]
+        md:w-[50%]
+        bg-muted
+        rounded-md
+        sm:rounded-xl
+        overflow-hidden
+      "
+        >
           <Image
             src={imageSrc}
             alt={alt || ""}
-            width={1200}
-            height={1200}
-            sizes="(max-width: 480px) 100vw, (max-width: 1024px) 90vw, 896px"
+            width={1000}
+            height={1000}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
             className="w-full h-auto object-contain"
             priority
           />
@@ -112,15 +124,6 @@ const markdownComponents: Components = {
       </figure>
     );
   },
-
-  /* ---------- Blockquote ---------- */
-  blockquote: ({ children }) => (
-    <div className="my-5 sm:my-6 border-l-4 border-primary bg-primary/5 px-3 py-3 sm:px-5 sm:py-4 rounded-md">
-      <div className="text-xs sm:text-sm md:text-base italic leading-relaxed wrap-break-words">
-        {children}
-      </div>
-    </div>
-  ),
 
   /* ---------- Code ---------- */
   code({ className, children }) {
