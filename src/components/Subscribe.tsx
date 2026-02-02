@@ -17,7 +17,7 @@ const Subscribe = ({ isModal, setIsModal }: SubscribePropType) => {
   const handleSubscribe = async () => {
     const trimmedEmail = email.trim();
 
-    const validation = emailSchema.safeParse(trimmedEmail);
+    const validation = emailSchema.safeParse({email:trimmedEmail});
     if (!validation.success) {
       toast.error("Please enter a valid email");
       return;
