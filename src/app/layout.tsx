@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     default: "DailyTech | Mobile, Gadgets, AI & Technology Explained",
     template: "%s | DailyTech",
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   description:
     "DailyTech provides the latest technology news, mobile phone reviews, laptop guides, AI tools, software insights, and coding tutorials explained in simple terms.",
   keywords: [
