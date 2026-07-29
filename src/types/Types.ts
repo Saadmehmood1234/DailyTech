@@ -31,15 +31,19 @@ export interface BlogType {
   excerpt: string;
   content: string;
   featuredImage: string;
-  seoDescription?:string
-  seoTitle?:string;
   category: Category;
   tags: string[];
   views: number;
   isFeatured: boolean;
-  updatedAt?:string
   createdAt: string;
   readTime: number;
+  seoTitle: string;
+  seoDescription: string;
+}
+
+export interface BlogViewsResponse {
+  success: boolean;
+  data: BlogType[];
 }
 
 export interface QueryType {

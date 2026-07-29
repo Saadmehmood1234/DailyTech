@@ -15,7 +15,7 @@ export const Home = async () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans">
-      <main className="grow container relative z-0 mx-auto px-6 2xl:px-0 max-w-7xl pt-10 pb-20">
+      <main className="grow container mx-auto px-6 2xl:px-0 max-w-7xl pt-10 pb-20">
         {featuredBlog && (
           <section className="mb-20">
             <div key={featuredBlog._id}>
@@ -65,7 +65,7 @@ export const Home = async () => {
               </Link>
             </div>
           </div>
-          <div className="lg:col-span-4 hidden lg:block">
+          <div className="lg:col-span-4  hidden lg:block">
             <BlogSidebar />
           </div>
         </div>

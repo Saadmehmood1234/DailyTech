@@ -71,47 +71,18 @@ const markdownComponents: Components = {
   ),
 
   /* ---------- Tables ---------- */
-  /* ---------- Tables (Fully Responsive) ---------- */
   table: ({ children }) => (
-    <div className="relative my-5 -mx-4 sm:mx-0 overflow-x-auto">
-      <div className="inline-block min-w-full align-middle">
-        <table className="min-w-full border border-border rounded-lg overflow-hidden text-[11px] sm:text-sm">
-          {children}
-        </table>
-      </div>
+    <div className="my-5 w-full overflow-x-auto rounded-lg border border-border">
+      <table className="min-w-full text-xs sm:text-sm">{children}</table>
     </div>
   ),
-
   th: ({ children }) => (
-    <th
-      className="
-      bg-muted
-      px-3
-      py-2
-      text-left
-      font-semibold
-      border-b
-      break-words
-      whitespace-normal
-    "
-    >
+    <th className="bg-muted p-2 font-semibold border-b whitespace-nowrap">
       {children}
     </th>
   ),
-
   td: ({ children }) => (
-    <td
-      className="
-      px-3
-      py-2
-      border-b
-      border-border
-      wrap-break-words
-      whitespace-normal
-    "
-    >
-      {children}
-    </td>
+    <td className="p-2 border-b border-border whitespace-nowrap">{children}</td>
   ),
 
   /* ---------- Images ---------- */
@@ -121,26 +92,13 @@ const markdownComponents: Components = {
 
     return (
       <figure className="my-6 sm:my-8 w-full">
-        <div
-          className="
-        relative
-        mx-auto
-        w-full
-        sm:w-[80%]
-        md:w-[50%]
-        bg-muted
-        rounded-md
-        sm:rounded-xl
-        overflow-hidden
-      "
-        >
+        <div className="relative w-full aspect-video overflow-hidden rounded-md sm:rounded-xl bg-muted">
           <Image
-            src={imageSrc}
+            src={imageSrc || ""}
             alt={alt || ""}
-            width={1000}
-            height={1000}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
-            className="w-full h-auto object-contain"
+            fill
+            sizes="(max-width: 480px) 100vw, (max-width: 1024px) 90vw, 896px"
+            className="object-cover"
             priority
           />
         </div>
@@ -153,6 +111,15 @@ const markdownComponents: Components = {
       </figure>
     );
   },
+
+  /* ---------- Blockquote ---------- */
+  blockquote: ({ children }) => (
+    <div className="my-5 sm:my-6 border-l-4 border-primary bg-primary/5 px-3 py-3 sm:px-5 sm:py-4 rounded-md">
+      <div className="text-xs sm:text-sm md:text-base italic leading-relaxed wrap-break-words">
+        {children}
+      </div>
+    </div>
+  ),
 
   /* ---------- Code ---------- */
   code({ className, children }) {

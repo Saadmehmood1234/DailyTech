@@ -1,96 +1,15 @@
 import { BlogSidebar } from "@/components/BlogSidebar";
 import { format } from "date-fns";
-import { Calendar, Clock, Eye } from "lucide-react";
+import { Calendar, Clock, Eye, Share2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { fetchBlogBySlug } from "@/lib/api";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import NoBlogs from "@/components/NoBlogs";
-import { ShareButton } from "@/components/ShareButton";
 interface BlogDetailPageProps {
   params: Promise<{ slug: string }>;
 }
-import type { Metadata } from "next";
-
-
-export async function generateMetadata({
-  params,
-}: BlogDetailPageProps): Promise<Metadata> {
-  const { slug } =await params;
-
-  const blog = await fetchBlogBySlug(slug);
-
-  if (!blog) {
-    return {
-      title: "Blog Not Found | DailyTech",
-      description: "The blog article you are looking for does not exist.",
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
-  }
-
-  const data = blog.data;
-
-  const title = `${data.title} | DailyTech`;
-  const description =
-    data.excerpt ||
-    data.seoDescription ||
-    data.content?.slice(0, 160) ||
-    "Read the latest technology insights, tutorials, and guides on DailyTech.";
-
-  const image =
-    data.featuredImage || "https://dailtech.in/og-image.png";
-
-  const url = `https://dailtech.in/blog/${slug}`;
-
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: url,
-    },
-    keywords: [
-      ...(data.tags || []),
-      data.category?.name,
-      "technology blog",
-      "tech news",
-      "programming",
-      "software development",
-      "AI",
-      "DailyTech",
-    ].filter(Boolean),
-    openGraph: {
-      title,
-      description,
-      url,
-      siteName: "DailyTech",
-      type: "article",
-      publishedTime: data.createdAt,
-      authors: ["Saad Mehmood"],
-      images: [
-        {
-          url: image,
-          width: 1200,
-          height: 630,
-          alt: data.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [image],
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
-
 export default async function BlogDetail({ params }: BlogDetailPageProps) {
   const { slug } = await params;
 
@@ -214,7 +133,10 @@ export default async function BlogDetail({ params }: BlogDetailPageProps) {
                   </p>
                 </div>
                 <div className="flex gap-2">
-                  <ShareButton title={blog.data.title} />
+                  <Button size="sm" variant="outline" className="gap-2">
+                    <Share2 className="h-4 w-4" />
+                    Share
+                  </Button>
                 </div>
               </div>
             </article>

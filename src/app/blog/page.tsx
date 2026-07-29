@@ -1,59 +1,58 @@
 import { BlogCard } from "@/components/BlogCard";
 import { fetchBlogCategory, fetchBlogs } from "@/lib/api";
 import { BlogType } from "@/types/Types";
+// import Loading from "./loading";
+// import { fetchBlogCategory, fetchBlogs, fetchBlogsByFilter } from "@/lib/api";
+// import generateQuery from "@/lib/GenerateQuery";
+// import { BlogType, Category, QueryType } from "@/lib/Types";
+// import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Tech Blog | Latest Technology News, AI, Gadgets & Coding – DailyTech",
-  description:
-    "Explore the latest technology blogs on DailyTech covering mobile phones, laptops, AI tools, software, coding tutorials, and useful tech guides for beginners and professionals.",
-  alternates: {
-    canonical: "https://dailtech.in/blog",
-  },
-  keywords: [
-    "technology blog",
-    "tech news",
-    "AI tools",
-    "mobile phones",
-    "laptops",
-    "gadgets",
-    "software reviews",
-    "coding tutorials",
-    "developer tools",
-    "tech guides",
-    "DailyTech",
-  ],
-
-  openGraph: {
-    title: "DailyTech Blog | Latest Tech News, AI & Gadgets",
-    description:
-      "Stay updated with DailyTech blogs featuring mobile reviews, laptop guides, AI tools, software tips, and coding insights.",
-    url: "https://dailtech.in/blog",
-    siteName: "DailyTech",
-    type: "website",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "DailyTech Blog | Technology Made Simple",
-    description:
-      "Read the latest blogs on technology, gadgets, AI, software, and coding on DailyTech.",
-    images: ["https://dailtech.in/og-image.png"],
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
 
 export default async function Blog() {
+  // const [blogs, setBlogs] = useState<BlogType[] | null>([]);
+  // const [category, setCategory] = useState<Category[] | null>([]);
+  // const [loading, setLoading] = useState(false);
+  // const [filterBlogs, setFilterBlogs] = useState<QueryType>({
+  //   title: "",
+  //   category: "",
+  //   tags: [],
+  //   readTime: "",
+  //   createdAt: "",
+  //   page: 1,
+  // });
+
+  // useEffect(() => {
+  //   const query = generateQuery(filterBlogs) as QueryType;
+
+  //   async function fetchAll() {
+  //     setLoading(true);
+  //     try {
+  //       const [blogsRes, categoryRes] = await Promise.all([
+  //         fetchBlogsByFilter(query),
+  //         fetchBlogCategory(),
+  //       ]);
+  //       setCategory(categoryRes.data);
+  //       setBlogs(blogsRes.data.filter((d: BlogType) => !d.isFeatured));
+  //     } catch (error) {
+  //       console.error("Failed to fetch data:", error);
+  //       setBlogs([]);
+  //       setCategory([]);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   fetchAll();
+  // }, [filterBlogs]);
+
+  // if (loading) {
+  //   return <Loading />;
+  // }
   const [blogsData, categoryData] = await Promise.all([
     fetchBlogs(),
     fetchBlogCategory(),
   ]);
-  const blogs = blogsData.data.filter((blog: BlogType) => !blog.isFeatured);
+  const blogs = blogsData.data.filter((blog:BlogType)=>!blog.isFeatured);
   const category = categoryData.data;
   if (!blogs || blogs.length === 0) {
     return (

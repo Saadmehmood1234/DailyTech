@@ -4,11 +4,14 @@ import {
   SubscribeResponse,
   BlogType,
   Category,
+  DashboardStats,
+  ResponseType,
   GetSubscriberResponse,
 } from "@/types/Types";
 import safeJson from "./SafeJson";
+import { API_BASE_URL } from "./ApiBaseUrl";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = API_BASE_URL;
 
 export const fetchBlogs = async (): Promise<ApiResponse<BlogType[]>> => {
   const res = await fetch(`${API_URL}/api/v1/blogs`);
@@ -17,6 +20,27 @@ export const fetchBlogs = async (): Promise<ApiResponse<BlogType[]>> => {
     return result;
   }
   return { data: [] };
+};
+
+export const fetchAllBlogs = async (): Promise<BlogType[]> => {
+  const blogs: BlogType[] = [];
+
+  for (let page = 1; page <= 100; page += 1) {
+    const res = await fetch(`${API_URL}/api/v1/blogs?page=${page}`, {
+      cache: "no-store",
+      credentials: "include",
+    });
+    const result = await safeJson<ApiResponse<BlogType[]>>(res);
+
+    if (!res.ok || !result?.data) {
+      throw new Error("Failed to fetch blog views");
+    }
+
+    blogs.push(...result.data);
+    if (result.data.length < 10) break;
+  }
+
+  return blogs;
 };
 
 export const fetchBlogBySlug = async (
@@ -71,9 +95,138 @@ export async function createSubscriber(
 }
 
 export async function fetchSubscriber(): Promise<GetSubscriberResponse | null> {
-  const res = await fetch(`${API_URL}/api/v1/subscribe`);
+  const res = await fetch(`${API_URL}/api/v1/subscribe`, {
+    credentials: "include",
+  });
   const result = await safeJson<GetSubscriberResponse>(res);
 
   return result ?? null;
 }
 
+export async function createBlogs(
+  data: FormData,
+): Promise<ApiResponse<BlogType> | null> {
+  for (const [key, value] of data.entries()) {
+    console.log(key, value);
+  }
+
+  const res = await fetch(`${API_URL}/api/v1/blogs`, {
+    method: "POST",
+    credentials: "include",
+    body: data,
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create blog");
+  }
+
+  return await safeJson<ApiResponse<BlogType>>(res);
+}
+
+export async function fetchDashboardStats(
+  cookieHeader?: string,
+): Promise<DashboardStats | null> {
+  const res = await fetch(`${API_URL}/api/v1/analytics/dashboard-stats`, {
+    cache: "no-store",
+    headers: cookieHeader ? { cookie: cookieHeader } : undefined,
+    credentials: "include",
+  });
+
+  if (!res.ok) return null;
+
+  return await safeJson<DashboardStats>(res);
+}
+
+export async function logout() {
+  const res = await fetch("/api/session/signout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to logout");
+  }
+  return await safeJson<ResponseType>(res);
+}
+
+export async function deleteBlog(id: string) {
+  const res = await fetch(
+    `${API_URL}/api/v1/blogs/${id}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    },
+  );
+  if (!res.ok) {
+    throw new Error("Error in deleting the blog");
+  }
+  return await safeJson<ResponseType>(res);
+}
+
+export async function createCategory(
+  data: FormData,
+): Promise<ApiResponse<Category> | null> {
+  for (const [key, value] of data.entries()) {
+    console.log(key, value);
+  }
+
+  const res = await fetch(`${API_URL}/api/v1/categories`, {
+    method: "POST",
+    credentials: "include",
+    body: data,
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create Category");
+  }
+
+  return await safeJson<ApiResponse<Category>>(res);
+}
+
+
+export async function deleteCategory(id: string) {
+  const res = await fetch(
+    `${API_URL}/api/v1/categories/${id}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    },
+  );
+  if (!res.ok) {
+    throw new Error("Error in deleting the blog");
+  }
+  return await safeJson<ResponseType>(res);
+}
+
+export async function updateBlog(
+  id: string,
+  data: {
+    title: string;
+    slug: string;
+    content: string;
+    excerpt: string;
+    category: string;
+    tags: string[];
+    seoTitle: string;
+    seoDescription: string;
+    readTime: number;
+  },
+): Promise<ApiResponse<BlogType> | null> {
+  const res = await fetch(`${API_URL}/api/v1/blogs/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
+
+  const result = await safeJson<ApiResponse<BlogType>>(res);
+  if (!res.ok) {
+    throw new Error(result?.message || "Failed to update blog");
+  }
+
+  return result;
+}
