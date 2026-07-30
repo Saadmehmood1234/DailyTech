@@ -9,8 +9,9 @@ interface BlogDetailPageProps {
 export default async function CategoryPage({ params }: BlogDetailPageProps) {
   const { slug } = await params;
   const BlogData = await fetchBlogCategoryBySlug(slug);
+  console.log("BlogData",BlogData)
 
-  if (!BlogData || BlogData.data.length) {
+  if (!BlogData || BlogData.data.length==0) {
     return (
       <div className="min-h-screen justify-center items-center w-full flex flex-col bg-background font-sans">
         <main className="grow containerz mx-auto px-6 2xl:px-0 max-w-7xl pt-12 pb-20">
