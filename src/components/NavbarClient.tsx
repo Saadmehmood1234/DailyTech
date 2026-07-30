@@ -9,12 +9,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"; // ← use Dialog
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,10 +37,7 @@ type Props = {
   isAuthenticated: boolean;
 };
 
-export default function NavbarClient({
-  categories,
-  isAuthenticated,
-}: Props) {
+export default function NavbarClient({ categories, isAuthenticated }: Props) {
   const location = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -70,8 +67,8 @@ export default function NavbarClient({
   }, [debouncedQuery]);
 
   return (
-    <nav className="glass-nav 2xl:px-0 border-b border-border w-full max-w-7xl py-4 px-6 flex justify-between items-center">
-      <div className="flex items-center gap-8">
+    <nav className="glass-nav 2xl:px-0 border-b border-border w-full max-w-7xl py-4 px-6 flex items-center gap-4">
+      <div className="flex items-center gap-8 shrink-0">
         <Link
           href="/"
           className="text-xl cursor-pointer font-display font-black"
@@ -84,7 +81,7 @@ export default function NavbarClient({
             <Button
               variant="ghost"
               size="sm"
-              className={`px-2 cursor-pointer  ${
+              className={`px-2 cursor-pointer ${
                 location === "/" ? "text-foreground" : "text-muted-foreground"
               }`}
             >
@@ -125,8 +122,8 @@ export default function NavbarClient({
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="max-sm:ml-2 flex relative w-48 sm:w-64">
+      <div className="flex-1 flex justify-center min-w-0">
+        <div className="relative w-full max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 
           <input
@@ -139,12 +136,12 @@ export default function NavbarClient({
               }
             }}
             placeholder="Search blogs..."
-            className="pl-9 pr-4 sm:py-2 py-1 bg-secondary/50 rounded-full text-sm w-full"
+            className="pl-9 pr-4 py-1 sm:py-2 bg-secondary/50 rounded-full text-sm w-full"
           />
 
           {suggestions.length > 0 && (
-            <div className="absolute top-full mt-2 w-full bg-background border rounded-md shadow-lg z-99">
-              {suggestions.map((blog) => (
+            <div className="absolute top-full mt-2 w-full bg-background border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+              {suggestions.slice(0, 5).map((blog) => (
                 <Link
                   key={blog._id}
                   href={`/blog/${blog.slug}`}
@@ -160,26 +157,13 @@ export default function NavbarClient({
             </div>
           )}
         </div>
+      </div>
 
-        {/* <Link href="/write">
-          <Button
-            size="sm"
-            className="hidden cursor-pointer sm:flex gap-2 rounded-full"
-          >
-            <PenSquare className="h-4 w-4" />
-            Write
-          </Button>
-        </Link>
-        */}
+      <div className="flex items-center gap-4 shrink-0">
         <Link
-          href={
-            isAuthenticated ? "/admin/analytics" : "/admin/auth/signin"
-          }
+          href={isAuthenticated ? "/admin/analytics" : "/admin/auth/signin"}
         >
-          <Button
-            size="sm"
-            className="hidden cursor-pointer sm:flex gap-2 rounded-full"
-          >
+          <Button size="sm" className="hidden sm:flex gap-2 rounded-full">
             {isAuthenticated ? (
               <LayoutDashboard className="h-4 w-4" />
             ) : (
@@ -188,8 +172,10 @@ export default function NavbarClient({
             {isAuthenticated ? "Dashboard" : "Login"}
           </Button>
         </Link>
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
+
+        {/* Mobile menu → Dialog (centered) */}
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
@@ -197,14 +183,14 @@ export default function NavbarClient({
             >
               <Menu className="h-5 w-5" />
             </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader className="mb-6 text-left">
-              <SheetTitle className="font-display font-bold text-2xl">
+          </DialogTrigger>
+          <DialogContent className="max-w-sm mx-auto p-6 rounded-lg">
+            <DialogHeader className="text-left">
+              <DialogTitle className="font-display font-bold text-2xl">
                 DailyTech.
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex p-4 flex-col gap-4 text-lg">
+              </DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-4 text-lg mt-4">
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
@@ -225,9 +211,7 @@ export default function NavbarClient({
               <div className="h-px bg-border my-2" />
               <Link
                 href={
-                  isAuthenticated
-                    ? "/admin/analytics"
-                    : "/admin/auth/signin"
+                  isAuthenticated ? "/admin/analytics" : "/admin/auth/signin"
                 }
                 onClick={() => setIsOpen(false)}
               >
@@ -240,22 +224,9 @@ export default function NavbarClient({
                   {isAuthenticated ? "Dashboard" : "Login"}
                 </Button>
               </Link>
-              {/* <Link href="/write" onClick={() => setIsOpen(false)}>
-                <Button className="w-full rounded-full cursor-pointer gap-2">
-                  <PenSquare className="h-4 w-4" />
-                  Start Writing
-                </Button>
-              </Link>
-              */}
-              {/* <Link href="/admin/analytics">
-                <Button className="w-full rounded-full cursor-pointer gap-2">
-                  <ChartSpline className="h-4 w-4" />
-                  Analytics
-                </Button>
-              </Link> */}
             </div>
-          </SheetContent>
-        </Sheet>
+          </DialogContent>
+        </Dialog>
       </div>
     </nav>
   );

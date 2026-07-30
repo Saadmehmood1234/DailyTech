@@ -141,7 +141,13 @@ export default async function BlogDetail({ params }: BlogDetailPageProps) {
               </div>
             </article>
             <aside className="lg:col-span-4 hidden lg:block space-y-12">
-              <BlogSidebar />
+              <BlogSidebar
+                isShow={{
+                  isShowTopics: true,
+                  isShowPopular: true,
+                  isShowSubscribe: true,
+                }}
+              />
             </aside>
           </div>
         </div>

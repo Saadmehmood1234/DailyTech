@@ -66,7 +66,13 @@ export const Home = async () => {
             </div>
           </div>
           <div className="lg:col-span-4  hidden lg:block">
-            <BlogSidebar />
+            <BlogSidebar
+              isShow={{
+                isShowTopics: true,
+                isShowPopular: true,
+                isShowSubscribe: true,
+              }}
+            />
           </div>
         </div>
       </main>

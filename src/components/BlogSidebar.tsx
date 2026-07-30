@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { fetchBlogCategory, fetchBlogs } from "@/lib/api";
-import { BlogType,Category } from "@/types/Types";
+import { BlogType, Category } from "@/types/Types";
 import SubscribeCard from "./SubscribeCard";
+type ShowType = {
+  isShowTopics: boolean;
+  isShowPopular: boolean;
+  isShowSubscribe: boolean;
+};
 
-export async function BlogSidebar() {
+type BlogSidebarProps = {
+  isShow: ShowType;
+};
+
+export async function BlogSidebar({ isShow }: BlogSidebarProps) {
   const blogs = await fetchBlogCategory();
   const Popular = await fetchBlogs();
 
@@ -17,53 +26,61 @@ export async function BlogSidebar() {
 
   return (
     <aside className="space-y-10 sticky top-24">
-      <div className="bg-card rounded-xl p-6 border border-border/50 shadow-sm">
-        <h3 className="font-display font-bold text-lg mb-4">Topics</h3>
-        <div className="flex flex-wrap gap-2">
-          {categories?.map((cat: Category) => (
-            <Link key={cat._id} href={`/blog/category/${cat.slug}`}>
-              <Badge
-                variant="secondary"
-                className="px-3 py-1.5 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors rounded-full"
+      {isShow.isShowTopics && (
+        <div className="bg-card rounded-xl p-6 border border-border/50 shadow-sm">
+          <h3 className="font-display font-bold text-lg mb-4">Topics</h3>
+
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat: Category) => (
+              <Link key={cat._id} href={`/blog/category/${cat.slug}`}>
+                <Badge
+                  variant="secondary"
+                  className="px-3 py-1.5 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors rounded-full"
+                >
+                  {cat.name}
+                </Badge>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {isShow.isShowPopular && (
+        <div>
+          <h3 className="font-display font-bold text-lg mb-6 flex items-center gap-2">
+            <span className="w-1 h-5 bg-primary rounded-full" />
+            Popular Reads
+          </h3>
+
+          <div className="space-y-6">
+            {popularBlogs.map((blog: BlogType, i: number) => (
+              <Link
+                key={blog._id}
+                href={`/blog/${blog.slug}`}
+                className="group block"
               >
-                {cat.name}
-              </Badge>
-            </Link>
-          ))}
-        </div>
-      </div>
+                <div className="flex gap-4 items-start">
+                  <span className="font-display font-bold text-muted-foreground/30 group-hover:text-primary/50 transition-colors">
+                    0{i + 1}
+                  </span>
 
-      <div>
-        <h3 className="font-display font-bold text-lg mb-6 flex items-center gap-2">
-          <span className="w-1 h-5 bg-primary rounded-full"></span>
-          Popular Reads
-        </h3>
-        <div className="space-y-6">
-          {popularBlogs?.map((blog: BlogType, i: number) => (
-            <Link
-              key={blog._id}
-              href={`/blog/${blog.slug}`}
-              className="group block"
-            >
-              <div className="flex gap-4 items-start">
-                <span className="font-display font-bold text-muted-foreground/30 group-hover:text-primary/50 transition-colors">
-                  0{i + 1}
-                </span>
-                <div>
-                  <h4 className="font-bold leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                    {blog.title}
-                  </h4>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {blog.readTime} min read
-                  </p>
+                  <div>
+                    <h4 className="font-bold leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                      {blog.title}
+                    </h4>
+
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {blog.readTime} min read
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <SubscribeCard />
+      {isShow.isShowSubscribe && <SubscribeCard />}
     </aside>
   );
 }
