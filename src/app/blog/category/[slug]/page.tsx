@@ -9,7 +9,6 @@ interface BlogDetailPageProps {
 export default async function CategoryPage({ params }: BlogDetailPageProps) {
   const { slug } = await params;
   const BlogData = await fetchBlogCategoryBySlug(slug);
-  console.log("BlogData",BlogData)
 
   if (!BlogData || BlogData.data.length==0) {
     return (
