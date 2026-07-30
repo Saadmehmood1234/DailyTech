@@ -1,11 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // ⚠️ modern is deprecated in newer Next.js
-    // remove if you’re on Next 14+
-  },
-
   images: {
     remotePatterns: [
       {
@@ -22,6 +17,15 @@ const nextConfig: NextConfig = {
   },
 
   reactCompiler: true,
+
+  async rewrites() {
+    return [
+      {
+        source: "/backend-api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
