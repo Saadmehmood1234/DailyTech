@@ -1,5 +1,4 @@
 const AboutUs = async () => {
-
   return (
     <div className="max-w-7xl mx-auto p-6 2xl:px-0">
       <h1 className="text-3xl font-bold mb-4">About DailyTech</h1>
