@@ -18,14 +18,14 @@ const nextConfig: NextConfig = {
 
   reactCompiler: true,
 
-  async rewrites() {
-    return [
-      {
-        source: "/backend-api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/backend-api/:path*",
+  //       destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;
